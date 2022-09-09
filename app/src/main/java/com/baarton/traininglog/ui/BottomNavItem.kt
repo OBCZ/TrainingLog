@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.baarton.traininglog.R
 
+
 sealed class BottomNavItem(@StringRes val titleRes: Int, val imageVector: ImageVector, val screenRoute: String) {
 
     companion object {
