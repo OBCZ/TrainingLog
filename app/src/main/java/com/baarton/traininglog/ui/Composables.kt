@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -25,10 +26,7 @@ import com.baarton.traininglog.ui.theme.Teal200
 @Composable
 fun MainScreenView() {
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = { BottomNavigation(navController = navController) }
-    ) {
-
+    Scaffold(bottomBar = { BottomNavigation(navController = navController) }) {
         NavigationGraph(navController = navController)
     }
 }
@@ -47,20 +45,19 @@ fun BottomNavigation(navController: NavController) {
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
+                icon = { Icon(imageVector = item.imageVector, contentDescription = stringResource(item.titleRes)) },
                 label = {
                     Text(
-                        text = item.title,
+                        text = stringResource(item.titleRes),
                         fontSize = 9.sp
                     )
                 },
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
-                selected = currentRoute == item.screen_route,
+                selected = currentRoute == item.screenRoute,
                 onClick = {
-                    navController.navigate(item.screen_route) {
-
+                    navController.navigate(item.screenRoute) {
                         navController.graph.startDestinationRoute?.let { screen_route ->
                             popUpTo(screen_route) {
                                 saveState = true
@@ -79,16 +76,10 @@ fun BottomNavigation(navController: NavController) {
 fun NavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.HomeList.screen_route
+        startDestination = BottomNavItem.HomeList.screenRoute
     ) {
-        composable(BottomNavItem.HomeList.screen_route) {
-            ListScreen()
-        }
-
-        composable(BottomNavItem.AddRecord.screen_route) {
-            AddRecordScreen()
-        }
-
+        composable(BottomNavItem.HomeList.screenRoute) { ListScreen() }
+        composable(BottomNavItem.AddRecord.screenRoute) { AddRecordScreen() }
     }
 }
 
