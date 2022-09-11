@@ -22,6 +22,7 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 
+//TODO extract strings
 @Composable
 fun AddRecordScreen(paddingValues: PaddingValues) {
     val viewModel: AddRecordViewModel by viewModel()
@@ -107,6 +108,8 @@ fun AddRecordScreenContent(
                     .padding(horizontal = 12.dp)
             )
         }
+
+        //TODO button with DB add + input validations (empty fields)
 
     }
 
