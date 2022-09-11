@@ -26,9 +26,9 @@ class AddRecordViewModel : ViewModel() {
         }
     }
 
-    fun onSportDurationChanged(newValue: String) {
+    fun onSportDurationChanged(newValue: Duration) {
         _addRecordState.update { state ->
-            state.copy(sportDuration = Duration.parseIsoString(newValue)) //FIXME
+            state.copy(sportDuration = newValue/*Duration.parseIsoString(newValue)*/) //FIXME
         }
     }
 
