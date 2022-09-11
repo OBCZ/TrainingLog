@@ -10,7 +10,6 @@ import kotlin.time.Duration.Companion.seconds
 
 class AddRecordViewModel : ViewModel() {
 
-
     private val _addRecordState: MutableStateFlow<AddRecordViewState> = MutableStateFlow(AddRecordViewState())
     val addRecordState: StateFlow<AddRecordViewState> = _addRecordState
 
@@ -28,10 +27,9 @@ class AddRecordViewModel : ViewModel() {
 
     fun onSportDurationChanged(newValue: Duration) {
         _addRecordState.update { state ->
-            state.copy(sportDuration = newValue/*Duration.parseIsoString(newValue)*/) //FIXME
+            state.copy(sportDuration = newValue)
         }
     }
-
 
     data class AddRecordViewState(
         val sportName: String = "",
