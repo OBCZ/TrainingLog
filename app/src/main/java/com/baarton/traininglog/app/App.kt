@@ -1,6 +1,8 @@
 package com.baarton.traininglog.app
 
 import android.app.Application
+import com.baarton.traininglog.db.DatabaseModule
+import com.baarton.traininglog.db.IDatabaseModule
 import com.baarton.traininglog.viewmodel.AddRecordViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,6 +21,7 @@ class App : Application() {
                     viewModel { AddRecordViewModel() }
 
                     single<IAppInfo> { AppInfo }
+                    single<IDatabaseModule> { DatabaseModule(get()) }
                 }
             )
         }
