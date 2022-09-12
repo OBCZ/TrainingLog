@@ -4,13 +4,17 @@ import android.app.TimePickerDialog
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -66,7 +70,8 @@ fun AddRecordScreenContent(
 
         TextField(
             label = { Text(style = Typography.caption, text = "Add sport") },
-            value = state.sportName,
+            value = state.sportName.value,
+            isError = !state.sportName.isValid(),
             onValueChange = { onSportValueChanged(it) },
             textStyle = Typography.body1,
             modifier = Modifier
@@ -76,7 +81,8 @@ fun AddRecordScreenContent(
 
         TextField(
             label = { Text(style = Typography.caption, text = "Add location") },
-            value = state.sportLocation,
+            value = state.sportLocation.value,
+            isError = !state.sportLocation.isValid(),
             onValueChange = { onSportLocationChanged(it) },
             textStyle = Typography.body1,
             modifier = Modifier
@@ -103,13 +109,28 @@ fun AddRecordScreenContent(
             }
 
             Text(
-                text = state.sportDuration.toString(), style = Typography.body1,
+                text = state.sportDuration.value.toString(),
+                style = Typography.body1,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .wrapContentSize()
                     .padding(horizontal = 12.dp)
             )
+
+            if (!state.sportDuration.isValid()) {
+                Icon(
+                    imageVector = Icons.Rounded.Warning,
+                    tint = Color.Red,
+                    contentDescription = "Duration validation warning",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .wrapContentSize()
+                        .padding(horizontal = 12.dp)
+                )
+            }
+
         }
+
         Column(
             modifier = Modifier
                 .fillMaxSize(),

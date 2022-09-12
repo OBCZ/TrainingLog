@@ -3,13 +3,13 @@ package com.baarton.traininglog.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.baarton.traininglog.db.IDatabaseModule
+import com.baarton.traininglog.model.Duration
 import com.baarton.traininglog.model.SportRecord
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -22,43 +22,73 @@ class AddRecordViewModel : ViewModel() {
 
     fun onSportValueChanged(newValue: String) {
         _addRecordState.update { state ->
-            state.copy(sportName = newValue)
+            state.copy(sportName = StateProperty(false, newValue))
         }
     }
 
     fun onSportLocationChanged(newValue: String) {
         _addRecordState.update { state ->
-            state.copy(sportLocation = newValue)
+            state.copy(sportLocation = StateProperty(false, newValue))
         }
     }
 
-    fun onSportDurationChanged(newValue: Duration) {
+    fun onSportDurationChanged(newValue: kotlin.time.Duration) {
         _addRecordState.update { state ->
-            state.copy(sportDuration = newValue)
+            state.copy(sportDuration = StateProperty(false, newValue))
         }
     }
 
-    //TODO input validations (empty fields)
-    // call Repo not DB directly
-    // tell user that the record has been added
+    //TODO call Repo not DB directly
     fun onSportRecordSaveClick() {
-        val recordToStore = with(_addRecordState.value) {
-            SportRecord(
-                0,
-                sportName,
-                sportLocation,
-                com.baarton.traininglog.model.Duration(sportDuration)
+        _addRecordState.update { state ->
+            state.copy(
+                sportName = StateProperty(false, state.sportName.value),
+                sportLocation = StateProperty(false, state.sportLocation.value),
+                sportDuration = StateProperty(false, state.sportDuration.value)
             )
         }
-        viewModelScope.launch {
-            dbModule.db.sportRecordDao().insert(recordToStore)
+
+        if (isInputValid()) {
+            val recordToStore = with(_addRecordState.value) {
+                SportRecord(
+                    sportName = sportName.value,
+                    sportLocation = sportLocation.value,
+                    sportDuration = Duration(sportDuration.value)
+                )
+            }
+            viewModelScope.launch {
+                dbModule.db.sportRecordDao().insert(recordToStore)
+                //TODO confirm toast?
+            }
+        } else {
+            //TODO warning toast?
+        }
+
+    }
+
+    private fun isInputValid(): Boolean {
+        return with(_addRecordState.value) {
+            sportName.isValid() && sportLocation.isValid() && sportDuration.isValid()
         }
     }
 
     data class AddRecordViewState(
-        val sportName: String = "",
-        val sportLocation: String = "",
-        val sportDuration: Duration = 0.seconds
+        val sportName: StateProperty<String> = StateProperty(value = ""),
+        val sportLocation: StateProperty<String> = StateProperty(value = ""),
+        val sportDuration: StateProperty<kotlin.time.Duration> = StateProperty(value = 0.seconds)
     )
+
+    class StateProperty<T>(
+        private val init: Boolean = true,
+        val value: T
+    ) {
+        fun isValid(): Boolean {
+            return when (value) {
+                is String -> value.isNotBlank() || init
+                is kotlin.time.Duration -> value != 0.seconds || init
+                else -> false //TODO review this
+            }
+        }
+    }
 
 }

@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class SportRecord(
 
     @PrimaryKey(autoGenerate = true)
-    val dbId: Int,
+    val dbId: Int = 0, // see autoGenerate doc
 
     @ColumnInfo(name = "sportName")
     val sportName: String,
