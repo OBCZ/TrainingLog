@@ -34,7 +34,8 @@ fun AddRecordScreen(paddingValues: PaddingValues) {
         state,
         { viewModel.onSportValueChanged(it) },
         { viewModel.onSportLocationChanged(it) },
-        { viewModel.onSportDurationChanged(it) }
+        { viewModel.onSportDurationChanged(it) },
+        { viewModel.onSportRecordSaveClick() }
     )
 }
 
@@ -45,6 +46,7 @@ fun AddRecordScreenContent(
     onSportValueChanged: (String) -> Unit,
     onSportLocationChanged: (String) -> Unit,
     onSportDurationChanged: (Duration) -> Unit,
+    onSportRecordSaveClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -108,8 +110,25 @@ fun AddRecordScreenContent(
                     .padding(horizontal = 12.dp)
             )
         }
-
-        //TODO button with DB add + input validations (empty fields)
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = CenterHorizontally
+        ) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                onClick = { onSportRecordSaveClick() }
+            ) {
+                Text(
+                    text = "Add record",
+                    style = Typography.button
+                )
+            }
+            //TODO switch with cloud/local storage option
+        }
 
     }
 

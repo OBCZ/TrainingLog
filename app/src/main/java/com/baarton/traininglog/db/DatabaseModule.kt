@@ -13,7 +13,7 @@ class DatabaseModule(context: Context) : IDatabaseModule {
     override val db: AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "sport_records_db").build()
 
     @Database(entities = [SportRecord::class], version = 1)
-    @TypeConverters(Converters::class)
+    @TypeConverters(value = [Converters::class])
     abstract class AppDatabase : RoomDatabase() {
 
         abstract fun sportRecordDao(): SportRecordDao

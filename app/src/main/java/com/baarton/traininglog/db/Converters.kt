@@ -1,19 +1,18 @@
 package com.baarton.traininglog.db
 
 import androidx.room.TypeConverter
-import kotlin.time.Duration
-
+import com.baarton.traininglog.model.Duration
 
 class Converters {
 
     @TypeConverter
     fun fromDuration(duration: Duration): String {
-        return duration.toIsoString()
+        return duration.duration.toIsoString()
     }
 
     @TypeConverter
     fun toDuration(durationStr: String): Duration {
-        return Duration.parseIsoString(durationStr)
+        return Duration(kotlin.time.Duration.parseIsoString(durationStr)) //TODO catch exception
     }
 
 }
