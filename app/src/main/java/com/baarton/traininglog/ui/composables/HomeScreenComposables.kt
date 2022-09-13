@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,7 @@ import kotlin.time.Duration.Companion.minutes
 
 
 @Composable
-fun ListScreen(paddingValues: PaddingValues) {
+fun HomeScreen(paddingValues: PaddingValues) {
     val viewModel: HomeScreenViewModel by viewModel()
 
     val state = viewModel.homeScreenState.collectAsState().value
@@ -57,18 +58,37 @@ fun HomeScreenContent(
                 .padding(24.dp)
         )
 
+        //TODO swipe down explicit reload
+
+        if (state.loading) {
+            LoadingScreen()
+        } else {
+            if (state.list.isNotEmpty()) { //TODO might not be true after API data combine
+                ListScreen(state.list, onClearDatabaseClicked)
+            } else {
+                EmptyScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun ListScreen(list: List<SportRecord>, onClearDatabaseClicked: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         RecordList(
             modifier = Modifier
                 .padding(12.dp)
                 .weight(1f),
-            records = state.list
+            records = list
         )
 
         Button(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp),
-            enabled = state.list.isNotEmpty(), //TODO might not be true after API data combine
             onClick = { onClearDatabaseClicked() }
         ) {
             Text(
@@ -138,6 +158,35 @@ fun RecordRow(record: SportRecord) {
     }
 }
 
+@Composable
+fun LoadingScreen() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        CircularProgressIndicator(modifier = Modifier
+            .align(Alignment.CenterHorizontally))
+    }
+}
+
+@Composable
+fun EmptyScreen() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Text(
+            text = stringResource(id = R.string.home_screen_empty),
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -154,6 +203,34 @@ fun DefaultPreview() {
                         sportDuration = Duration(60.minutes)
                     )
                 )
+            ),
+            onClearDatabaseClicked = { }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyPreview() {
+    TrainingLogTheme {
+        HomeScreenContent(
+            paddingValues = PaddingValues(12.dp),
+            state = HomeScreenViewModel.HomeScreenViewState(
+                false, listOf()
+            ),
+            onClearDatabaseClicked = { }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingPreview() {
+    TrainingLogTheme {
+        HomeScreenContent(
+            paddingValues = PaddingValues(12.dp),
+            state = HomeScreenViewModel.HomeScreenViewState(
+                true, listOf()
             ),
             onClearDatabaseClicked = { }
         )

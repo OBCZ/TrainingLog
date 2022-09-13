@@ -15,7 +15,7 @@ class HomeScreenViewModel : ViewModel() {
 
     private val repositoryModule: IRepositoryModule by KoinJavaComponent.inject(IRepositoryModule::class.java)
 
-    private val _homeScreenState: MutableStateFlow<HomeScreenViewState> = MutableStateFlow(HomeScreenViewState())
+    private val _homeScreenState: MutableStateFlow<HomeScreenViewState> = MutableStateFlow(HomeScreenViewState(loading = true))
     val homeScreenState: StateFlow<HomeScreenViewState> = _homeScreenState
 
     init {
@@ -24,24 +24,26 @@ class HomeScreenViewModel : ViewModel() {
 
     private fun initialize() {
         viewModelScope.launch {
-
             repositoryModule.getRecords().collect {
                 _homeScreenState.update { state ->
-                    state.copy(list = it)
+                    state.copy(loading = false, list = it)
                 }
             }
         }
     }
 
     fun clearDatabase() {
+        _homeScreenState.update {
+            it.copy(loading = true)
+        }
         viewModelScope.launch {
             repositoryModule.nuke()
         }
     }
 
     data class HomeScreenViewState(
-        val loading: Boolean = false, //TODO implement logic for that + swipe down explicit
-        val list: List<SportRecord> = listOf() //TODO implement is empty screen logic
+        val loading: Boolean = false,
+        val list: List<SportRecord> = listOf()
     )
 
 }

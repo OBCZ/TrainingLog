@@ -66,7 +66,7 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
         navController = navController,
         startDestination = BottomNavItem.HomeList.screenRoute
     ) {
-        composable(BottomNavItem.HomeList.screenRoute) { ListScreen(paddingValues) }
+        composable(BottomNavItem.HomeList.screenRoute) { HomeScreen(paddingValues) }
         composable(BottomNavItem.AddRecord.screenRoute) { AddRecordScreen(paddingValues) }
     }
 }
