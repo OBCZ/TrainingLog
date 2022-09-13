@@ -137,10 +137,20 @@ fun AddRecordScreenContent(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = CenterHorizontally
         ) {
+
+            if (!state.formIsValid) {
+                Text(
+                    text = "Form is invalid.",
+                    color = Color.Red,
+                    style = Typography.caption
+                )
+            }
+
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(24.dp),
+                enabled = state.formIsValid,
                 onClick = { onSportRecordSaveClick() }
             ) {
                 Text(
