@@ -13,4 +13,7 @@
     <string name="add_screen_invalid_form_text_warning">Form is invalid or incomplete</string>
     <string name="add_screen_add_record_button">Add record</string>
 
+    <string name="home_screen_title">Record Overview</string>
+    <string name="home_screen_clear_db_button">Clear local storage</string>
+
 </resources>

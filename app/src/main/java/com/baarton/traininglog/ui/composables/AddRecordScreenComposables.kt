@@ -3,10 +3,7 @@ package com.baarton.traininglog.ui.composables
 import android.app.TimePickerDialog
 import android.content.Context
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
@@ -14,12 +11,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.baarton.traininglog.ui.theme.Typography
 import com.baarton.traininglog.R
 import com.baarton.traininglog.viewmodel.AddRecordViewModel
 import org.koin.androidx.compose.viewModel
@@ -62,7 +57,7 @@ fun AddRecordScreenContent(
 
         Text(
             text = stringResource(id = R.string.add_screen_title),
-            style = Typography.h1,
+            style = MaterialTheme.typography.h1,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .align(CenterHorizontally)
@@ -70,22 +65,22 @@ fun AddRecordScreenContent(
         )
 
         TextField(
-            label = { Text(style = Typography.caption, text = stringResource(id = R.string.add_screen_sport_name_field_caption)) },
+            label = { Text(style = MaterialTheme.typography.caption, text = stringResource(id = R.string.add_screen_sport_name_field_caption)) },
             value = state.sportName.value,
             isError = !state.sportName.isValid(),
             onValueChange = { onSportValueChanged(it) },
-            textStyle = Typography.body1,
+            textStyle = MaterialTheme.typography.body1,
             modifier = Modifier
                 .align(CenterHorizontally)
                 .padding(12.dp),
         )
 
         TextField(
-            label = { Text(style = Typography.caption, text = stringResource(id = R.string.add_screen_sport_location_field_caption)) },
+            label = { Text(style = MaterialTheme.typography.caption, text = stringResource(id = R.string.add_screen_sport_location_field_caption)) },
             value = state.sportLocation.value,
             isError = !state.sportLocation.isValid(),
             onValueChange = { onSportLocationChanged(it) },
-            textStyle = Typography.body1,
+            textStyle = MaterialTheme.typography.body1,
             modifier = Modifier
                 .align(CenterHorizontally)
                 .padding(12.dp)
@@ -105,13 +100,13 @@ fun AddRecordScreenContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.add_screen_select_duration_button),
-                    style = Typography.button
+                    style = MaterialTheme.typography.button
                 )
             }
 
             Text(
                 text = state.sportDuration.value.toString(),
-                style = Typography.body1,
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .wrapContentSize()
@@ -121,7 +116,7 @@ fun AddRecordScreenContent(
             if (!state.sportDuration.isValid()) {
                 Icon(
                     imageVector = Icons.Rounded.Warning,
-                    tint = Color.Red,
+                    tint = MaterialTheme.colors.error,
                     contentDescription = stringResource(id = R.string.add_screen_content_description_duration_warning),
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
@@ -142,8 +137,8 @@ fun AddRecordScreenContent(
             if (!state.formIsValid) {
                 Text(
                     text = stringResource(id = R.string.add_screen_invalid_form_text_warning),
-                    color = Color.Red,
-                    style = Typography.caption
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption
                 )
             }
 
@@ -156,7 +151,7 @@ fun AddRecordScreenContent(
             ) {
                 Text(
                     text = stringResource(id = R.string.add_screen_add_record_button),
-                    style = Typography.button
+                    style = MaterialTheme.typography.button
                 )
             }
             //TODO switch with cloud/local storage option

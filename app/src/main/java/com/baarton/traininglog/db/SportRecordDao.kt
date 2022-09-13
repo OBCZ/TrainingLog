@@ -5,14 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.baarton.traininglog.model.SportRecord
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface SportRecordDao {
 
-    //TODO flow
     @Query("SELECT * FROM sport_records")
-    suspend fun getAll(): List<SportRecord>
+    fun getAll(): Flow<List<SportRecord>>
 
     //TODO how to deal with conflicts?
     @Insert(onConflict = OnConflictStrategy.REPLACE)

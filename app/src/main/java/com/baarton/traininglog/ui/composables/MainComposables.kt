@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -13,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.baarton.traininglog.ui.BottomNavItem
-import com.baarton.traininglog.ui.theme.Typography
 
 
 @Composable
@@ -39,11 +37,11 @@ fun BottomNavigation(navController: NavController) {
                 label = {
                     Text(
                         text = stringResource(item.titleRes),
-                        style = Typography.caption
+                        style = MaterialTheme.typography.caption
                     )
                 },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                selectedContentColor = MaterialTheme.colors.background,
+                unselectedContentColor = MaterialTheme.colors.onBackground.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screenRoute,
                 onClick = {
