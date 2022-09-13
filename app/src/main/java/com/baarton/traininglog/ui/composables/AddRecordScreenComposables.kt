@@ -16,9 +16,11 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.baarton.traininglog.ui.theme.Typography
+import com.baarton.traininglog.R
 import com.baarton.traininglog.viewmodel.AddRecordViewModel
 import org.koin.androidx.compose.viewModel
 import kotlin.time.Duration
@@ -26,7 +28,6 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 
-//TODO extract strings
 @Composable
 fun AddRecordScreen(paddingValues: PaddingValues) {
     val viewModel: AddRecordViewModel by viewModel()
@@ -60,7 +61,7 @@ fun AddRecordScreenContent(
         val context = LocalContext.current
 
         Text(
-            text = "Add Record Screen",
+            text = stringResource(id = R.string.add_screen_title),
             style = Typography.h1,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -69,7 +70,7 @@ fun AddRecordScreenContent(
         )
 
         TextField(
-            label = { Text(style = Typography.caption, text = "Add sport") },
+            label = { Text(style = Typography.caption, text = stringResource(id = R.string.add_screen_sport_name_field_caption)) },
             value = state.sportName.value,
             isError = !state.sportName.isValid(),
             onValueChange = { onSportValueChanged(it) },
@@ -80,7 +81,7 @@ fun AddRecordScreenContent(
         )
 
         TextField(
-            label = { Text(style = Typography.caption, text = "Add location") },
+            label = { Text(style = Typography.caption, text = stringResource(id = R.string.add_screen_sport_location_field_caption)) },
             value = state.sportLocation.value,
             isError = !state.sportLocation.isValid(),
             onValueChange = { onSportLocationChanged(it) },
@@ -103,7 +104,7 @@ fun AddRecordScreenContent(
                 onClick = { selectTime(context, onSportDurationChanged) },
             ) {
                 Text(
-                    text = "Select duration",
+                    text = stringResource(id = R.string.add_screen_select_duration_button),
                     style = Typography.button
                 )
             }
@@ -121,7 +122,7 @@ fun AddRecordScreenContent(
                 Icon(
                     imageVector = Icons.Rounded.Warning,
                     tint = Color.Red,
-                    contentDescription = "Duration validation warning",
+                    contentDescription = stringResource(id = R.string.add_screen_content_description_duration_warning),
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .wrapContentSize()
@@ -140,7 +141,7 @@ fun AddRecordScreenContent(
 
             if (!state.formIsValid) {
                 Text(
-                    text = "Form is invalid.",
+                    text = stringResource(id = R.string.add_screen_invalid_form_text_warning),
                     color = Color.Red,
                     style = Typography.caption
                 )
@@ -154,7 +155,7 @@ fun AddRecordScreenContent(
                 onClick = { onSportRecordSaveClick() }
             ) {
                 Text(
-                    text = "Add record",
+                    text = stringResource(id = R.string.add_screen_add_record_button),
                     style = Typography.button
                 )
             }

@@ -1,6 +1,16 @@
 <resources>
+
     <string name="app_name">Training Log</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_add">Add</string>
+
+    <string name="add_screen_title">Add Your Record</string>
+    <string name="add_screen_sport_name_field_caption">Type sport</string>
+    <string name="add_screen_sport_location_field_caption">Type location</string>
+    <string name="add_screen_select_duration_button">Select duration</string>
+    <string name="add_screen_content_description_duration_warning">Duration validation warning</string>
+    <string name="add_screen_invalid_form_text_warning">Form is invalid or incomplete</string>
+    <string name="add_screen_add_record_button">Add record</string>
+
 </resources>

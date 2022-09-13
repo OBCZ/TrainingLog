@@ -91,7 +91,7 @@ class AddRecordViewModel : ViewModel() {
             return when (value) {
                 is String -> value.isNotBlank() || init
                 is kotlin.time.Duration -> value != 0.seconds || init
-                else -> false //TODO review this
+                else -> throw UnsupportedOperationException("Validity check for this type ${value?.let { it::class.java }} is not supported.")
             }
         }
     }
