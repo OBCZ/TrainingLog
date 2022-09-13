@@ -4,6 +4,7 @@
 
     <string name="nav_home">Home</string>
     <string name="nav_add">Add</string>
+    <string name="nav_about">About</string>
 
     <string name="add_screen_title">Add Your Record</string>
     <string name="add_screen_sport_name_field_caption">Type sport</string>
@@ -16,5 +17,11 @@
     <string name="home_screen_title">Record Overview</string>
     <string name="home_screen_empty">No records. Go to Add Screen and start adding your data!</string>
     <string name="home_screen_clear_db_button">Clear local storage</string>
+
+    <string name="about_screen_title">About app</string>
+    <string name="about_screen_debug_tag">DEBUG</string>
+    <string name="about_screen_package">Package name: %1$s</string>
+    <string name="about_screen_version">Version: %1$s</string>
+    <string name="about_screen_copyright">OBCZ 2022</string>
 
 </resources>

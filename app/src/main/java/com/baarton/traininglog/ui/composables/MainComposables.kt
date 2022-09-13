@@ -27,6 +27,7 @@ fun BottomNavigation(navController: NavController) {
     val items = listOf(
         BottomNavItem.HomeList,
         BottomNavItem.AddRecord,
+        BottomNavItem.About
     )
     BottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -68,5 +69,6 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
     ) {
         composable(BottomNavItem.HomeList.screenRoute) { HomeScreen(paddingValues) }
         composable(BottomNavItem.AddRecord.screenRoute) { AddRecordScreen(paddingValues) }
+        composable(BottomNavItem.About.screenRoute) { AboutScreen(paddingValues) }
     }
 }

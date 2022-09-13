@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.baarton.traininglog.R
 
@@ -13,8 +14,10 @@ sealed class BottomNavItem(@StringRes val titleRes: Int, val imageVector: ImageV
     companion object {
         private const val SCREEN_ROUTE_HOME = "home"
         private const val SCREEN_ROUTE_ADD = "add_post"
+        private const val SCREEN_ROUTE_ABOUT = "about"
     }
 
     object HomeList : BottomNavItem(R.string.nav_home, Icons.Default.Home, SCREEN_ROUTE_HOME)
     object AddRecord : BottomNavItem(R.string.nav_add, Icons.Default.Add, SCREEN_ROUTE_ADD)
+    object About : BottomNavItem(R.string.nav_about, Icons.Default.Info, SCREEN_ROUTE_ABOUT)
 }

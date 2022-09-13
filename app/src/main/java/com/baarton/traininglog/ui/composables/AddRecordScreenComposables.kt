@@ -158,7 +158,6 @@ fun AddRecordScreenContent(
         }
 
     }
-
 }
 
 fun selectTime(context: Context, onSportDurationChanged: (Duration) -> Unit) {
