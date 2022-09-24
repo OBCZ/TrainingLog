@@ -10,6 +10,7 @@ class RepositoryModule : IRepositoryModule {
 
     private val dbModule: IDatabaseModule by KoinJavaComponent.inject(IDatabaseModule::class.java)
     //TODO API service
+    //TODO https://firebase.google.com/docs/database/rest/start
 
     override suspend fun addRecord(recordToStore: SportRecord) {
         dbModule.db.sportRecordDao().insert(recordToStore)
